@@ -1,0 +1,23 @@
+% Carregar os dados DI
+load('dados_audio_DI.mat');
+
+% Atribuir os dados DI a X
+X_di = cat(1, dados_audio_rei{:});
+
+Whi_validacao = Whi(:, 1:size(X_di, 2));
+
+% Passo 2: Calcular entrada da camada escondida
+net_h_di = Whi * X_di' + bias_hi * ones(1, size(X_di', 2));
+
+% Passo 3: Calcular a saída da camada escondida
+Yh_di = logsig(net_h_di);
+
+% Passo 4: Calcular entrada da camada de saída
+net_o_di = Woh * Yh_di + bias_oh * ones(1, size(Yh_di, 2));
+
+% Passo 5: Calcular a saída da rede neural para os dados DI
+Ys_di =k * net_o_di;
+
+disp(Ys_di)
+classe_prevista = round(max(Ys_di,[],2));
+disp(classe_prevista)
